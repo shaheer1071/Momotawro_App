@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'podcast_screen.dart';
+import 'premium_screen.dart';
+import 'explore_screen.dart';
+import 'profile_detail_screen.dart';
 
-class SleepStoriesScreen extends StatelessWidget {
+class SleepStoriesScreen extends StatefulWidget {
   const SleepStoriesScreen({super.key});
+
+  @override
+  State<SleepStoriesScreen> createState() => _SleepStoriesScreenState();
+}
+
+class _SleepStoriesScreenState extends State<SleepStoriesScreen> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +110,12 @@ class SleepStoriesScreen extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PodcastScreen()),
+                        );
+                      },
                       icon: const Icon(Icons.play_arrow, color: Colors.white),
                       label: const Text(
                         'Let\'s Start',
@@ -217,7 +232,7 @@ class SleepStoriesScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => PodcastScreen()),
+                          MaterialPageRoute(builder: (context) => const PremiumScreen()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -245,6 +260,56 @@ class SleepStoriesScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        color: Colors.white,
+        elevation: 10,
+        child: SizedBox(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(Icons.home_outlined,
+                    color: _currentIndex == 0 ? const Color(0xFF7B6FFF) : Colors.grey),
+                onPressed: () {
+                  setState(() => _currentIndex = 0);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ExploreScreen()));
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.mic,
+                    color: _currentIndex == 1 ? const Color(0xFF7B6FFF) : Colors.grey),
+                onPressed: () => setState(() => _currentIndex = 1),
+              ),
+              const SizedBox(width: 48), // space for FAB
+              IconButton(
+                icon: Icon(Icons.list,
+                    color: _currentIndex == 3 ? const Color(0xFF7B6FFF) : Colors.grey),
+                onPressed: () => setState(() => _currentIndex = 3),
+              ),
+              IconButton(
+                icon: Icon(Icons.person_outline,
+                    color: _currentIndex == 4 ? const Color(0xFF7B6FFF) : Colors.grey),
+                onPressed: () {
+                  setState(() => _currentIndex = 4);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ProfileDetailScreen()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color(0xFF7B6FFF),
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

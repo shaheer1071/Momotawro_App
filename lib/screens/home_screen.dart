@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: Image.asset(
-                      'assets/images/notification_illustration.png',
+                      'assets/images/s2.png',
                       width: 150,
                       height: 150,
                       fit: BoxFit.contain,
